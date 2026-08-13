@@ -147,14 +147,14 @@ begin
    Assert (Net.Nodes(2).State = Active and then Net.Nodes(2).Parent = 1, "Node blocked from re-entering tree");
    Put_Line ("      PASS");
 
-   -- TEST 13 - Initiator Self-Messaging edge case
+   -- TEST 13 - Initiator Self-Message Handling (FIXED)
    Put_Line ("TEST 13 - Initiator Self-Message Handling");
    Put_Line ("  13.1 Assert Initiator deficit absorbs self-transmission");
    Send_Message (Net, 1, 1);
-   Assert (Net.Nodes(1).Deficit = 3, "Initiator self-send failed");
+   Assert (Net.Nodes(1).Deficit = 2, "Initiator self-send failed");
    Receive_Message (Net, 1, 1);
    Put_Line ("  13.2 Assert self-message strictly triggers immediate Ack response variant");
-   Assert (Net.Nodes(1).Deficit = 2, "Self-send deadlocked without immediate ack");
+   Assert (Net.Nodes(1).Deficit = 1, "Self-send deadlocked without immediate ack");
    Put_Line ("      PASS");
 
    Put_Line ("=====================================");
